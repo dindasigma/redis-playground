@@ -12,4 +12,5 @@ func main() {
 	fmt.Println("Go Redis Playground")
 	client.Init()
 	client.Basic()
+	client.Pubsub()
 }
