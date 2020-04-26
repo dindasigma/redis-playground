@@ -47,7 +47,7 @@ const resolvers = {
 		}
 	},
 	Query: {
-		hello: (parent, {name}) => {
+		hello: (parent, { name }) => {
 			return `hello world ${name}`
 		},
 		user: () => ({
@@ -56,7 +56,7 @@ const resolvers = {
 		})
 	},
 	Mutation: {
-		login: (parent, {userInfo:{username}}, context, info) => {
+		login: (parent, { userInfo: { username } }, context, info) => {
 			console.log(context)
 			return username;
 		},

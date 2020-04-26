@@ -28,11 +28,11 @@ const resolvers = {
 	},
 	Mutation: {
 		message: (_, { complaint }, { pubsub }) => {
-				pubsub.publish(NEW_MESSAGE, {
-						newMessage: complaint
-				});
+			pubsub.publish(NEW_MESSAGE, {
+				newMessage: complaint
+			});
 
-				return complaint
+			return complaint
 		}
 	}
 };

@@ -79,7 +79,7 @@ mutation {
     	username
     }
   }
-  
+
   login(UserInfo :{username:"dinda", password:"sigma"})
 }
 */

@@ -45,31 +45,31 @@ const resolvers = {
 	},
 	Mutation: {
 		message: async (_, { complaint }, { context, pubsub }) => {
-				await MiddlewareSession(complaint, context)
-				pubsub.publish(NEW_MESSAGE, {
-						newMessage: complaint
-				});
+			await MiddlewareSession(complaint, context)
+			pubsub.publish(NEW_MESSAGE, {
+				newMessage: complaint
+			});
 
-				return complaint
+			return complaint
 		},
 		createLogSession: (_, { complaint }, context, info) => {
-				console.log(context.req.header.IPAddress)
-				const data = {
-						id: 1,
-						createdAt: new Date(),
-						args: complaint,
-						resolver: info.fieldName,
-						origin: context.req.header('origin'),
-						ipAddress: context.req.header('x-forwarded-for')
-				}
-				return data
+			console.log(context.req.header.IPAddress)
+			const data = {
+				id: 1,
+				createdAt: new Date(),
+				args: complaint,
+				resolver: info.fieldName,
+				origin: context.req.header('origin'),
+				ipAddress: context.req.header('x-forwarded-for')
+			}
+			return data
 		}
 
 	}
 };
 
 const MiddlewareSession = (complaint, context) => {
-		//context.db.Mutation.createLogSession({})
+	//context.db.Mutation.createLogSession({})
 }
 
 const pubsub = new PubSub();

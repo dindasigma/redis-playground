@@ -72,6 +72,6 @@ mutation {
   		id,
     	username
     }
-  }   
+  }
 }
 */

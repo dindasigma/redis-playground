@@ -49,8 +49,8 @@ const resolvers = {
 				ipAddress: "test"
 			}
 		}
-  	},
-  	Mutation: {
+	},
+	Mutation: {
 		message: async (_, { complaint }, { context, pubsub }) => {
 			await MiddlewareSession(complaint, context)
 			pubsub.publish(NEW_MESSAGE, {

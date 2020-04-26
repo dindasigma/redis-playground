@@ -41,18 +41,18 @@ const typeDefs = gql`
 const NEW_USER = "NEW_USER";
 
 const resolvers = {
-    Subscription: {
-        newUser: {
-            subscribe: (_, __, { pubsub }) => pubsub.asyncIterator(NEW_USER)
-        }
-    },
+	Subscription: {
+		newUser: {
+			subscribe: (_, __, { pubsub }) => pubsub.asyncIterator(NEW_USER)
+		}
+	},
 	User: {
 		firstLetterOfUsername: parent => {
 			return parent.username[0]
 		}
 	},
 	Query: {
-		hello: (parent, {name}) => {
+		hello: (parent, { name }) => {
 			return `hello world ${name}`
 		},
 		user: () => ({
@@ -61,26 +61,26 @@ const resolvers = {
 		})
 	},
 	Mutation: {
-		login: (parent, {userInfo:{username}}, context, info) => {
+		login: (parent, { userInfo: { username } }, context, info) => {
 			console.log(context)
 			return username;
 		},
-		register: (_, {userInfo: { username }}, {pubsub}) => {
-            const user = {
-                id: 1,
-                username
-            }
+		register: (_, { userInfo: { username } }, { pubsub }) => {
+			const user = {
+				id: 1,
+				username
+			}
 
-            pubsub.publish(NEW_USER, {
-                newUser: user
-            })
+			pubsub.publish(NEW_USER, {
+				newUser: user
+			})
 
-            return {
-                errors: null,
-                user
+			return {
+				errors: null,
+				user
 
-            };
-        }
+			};
+		}
 	}
 }
 
