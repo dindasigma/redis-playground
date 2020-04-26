@@ -1,4 +1,4 @@
-# GraphQL Server with Apollo Servers
+# GraphQL Server with Apollo Server
 
 ## Running app
 ```
