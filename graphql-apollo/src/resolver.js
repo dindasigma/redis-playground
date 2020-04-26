@@ -1,10 +1,10 @@
 const { ApolloServer, gql } = require("apollo-server");
 
-// args in reseolver
-// 1. argumen
+// args in resolver
+// 1. argument
 // 2. context: define on ApolloServer
 
-// we also can create a resolver from field, and will overriding that field
+// also can create a resolver from field, and will overriding that field
 
 const typeDefs = gql`
 	type Query {

@@ -1,11 +1,5 @@
 const { ApolloServer, gql, PubSub } = require("apollo-server");
 
-// args in reseolver
-// 1. argumen
-// 2. context: define on ApolloServer
-
-// we also can create a resolfer from field, and will overriding that field
-
 const typeDefs = gql`
 	type Query {
 		hello(name: String): String!

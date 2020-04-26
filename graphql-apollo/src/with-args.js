@@ -14,8 +14,8 @@ const typeDefs = gql`
 	}
 
 	type Error {
-			field: String!
-			message: String!
+		field: String!
+		message: String!
 	}
 
 	type RegisterResponse {
@@ -51,7 +51,6 @@ const resolvers = {
 				id: 1,
 				username: "bob"
 			}
-
 		})
 	}
 }
