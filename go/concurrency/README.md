@@ -7,4 +7,3 @@
 - [Buffered Channel](https://github.com/dindasigma/my-playground/blob/master/go/concurrency/exercises/buffered_channel.go)
 - [Unbidirectional Channel](https://github.com/dindasigma/my-playground/blob/master/go/concurrency/exercises/unbidirectional_channel.go)
 - [Closing Channel](https://github.com/dindasigma/my-playground/blob/master/go/concurrency/exercises/closing_channel.go)
-cd 
