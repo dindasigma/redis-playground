@@ -22,7 +22,7 @@ func client() {
 	defer conn.Close()
 	defer ch.Close()
 
-	q := utils.GetQueue("hello", ch)
+	q := utils.GetQueue("hello", false, false, false, false, nil, ch)
 
 	msgs, err := ch.Consume (
 		q.Name, // name of queue
@@ -46,7 +46,7 @@ func server() {
 	defer conn.Close()
 	defer ch.Close()
 
-	q := utils.GetQueue("hello", ch)
+	q := utils.GetQueue("hello", false, false, false, false, nil, ch)
 
 	msg := amqp.Publishing{
 		ContentType: "text/plain",

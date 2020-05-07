@@ -15,7 +15,7 @@ func main() {
 	defer conn.Close()
 	defer ch.Close()
 
-	q := utils.GetQueue("hello", ch)
+	q := utils.GetQueue("hello", false, false, false, false, nil, ch)
 
 	msgs, err := ch.Consume(
 		q.Name, // queue
