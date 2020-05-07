@@ -1,10 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/streadway/amqp"
+	"github.com/dindasigma/go-rabbitmq/excercise/utils"
 )
 
 func main() {
@@ -15,14 +15,14 @@ func main() {
 	forever := make(chan bool)
 	log.Printf(" [*] Waiting for messages. To exit press CTRL+C")
 	<-forever
-
-
 }
 
 func client() {
-	conn, ch, q := getQueue()
+	conn, ch := utils.GetChannel()
 	defer conn.Close()
 	defer ch.Close()
+
+	q := utils.GetQueue("hello", ch)
 
 	msgs, err := ch.Consume (
 		q.Name, // name of queue
@@ -34,7 +34,7 @@ func client() {
 		nil, // header
 	)
 
-	failOnError(err, "Failed to register a consumer")
+	utils.FailOnError(err, "Failed to register a consumer")
 
 	for msg := range msgs {
 		log.Printf("Received message with message: %s", msg.Body)
@@ -42,9 +42,11 @@ func client() {
 }
 
 func server() {
-	conn, ch, q := getQueue()
+	conn, ch := utils.GetChannel()
 	defer conn.Close()
 	defer ch.Close()
+
+	q := utils.GetQueue("hello", ch)
 
 	msg := amqp.Publishing{
 		ContentType: "text/plain",
@@ -53,31 +55,4 @@ func server() {
 
 	// publish with direct exchange type (default): guarantee that only one of client get the message and only one time
 	ch.Publish("", q.Name, false, false, msg)
-}
-
-func getQueue() (*amqp.Connection, *amqp.Channel, *amqp.Queue) {
-	conn, err := amqp.Dial("amqp://guest@localhost:5672")
-	failOnError(err, "Failed to connect to RabbitMQ")
-
-	ch, err := conn.Channel()
-	failOnError(err,"Failed to open a channel")
-
-	q, err := ch.QueueDeclare (
-		"hello", // name of queue
-		false, // durable
-		false, // autodelete
-		false, // exclusive
-		false, // nowait
-		nil, // header
-	) // direct exchange
-	failOnError(err, "Failed to declare a queue")
-
-	return conn, ch, &q
-}
-
-func failOnError(err error, msg string) {
-	if err != nil {
-		log.Fatalf("%s: %s", msg, err)
-		panic(fmt.Sprintf("%s: %s", msg, err))
-	}
 }
