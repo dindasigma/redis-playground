@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/dindasigma/go-rabbitmq/coordinator"
+	"github.com/dindasigma/go-rabbitmq/project/coordinator"
 )
 
 func main() {

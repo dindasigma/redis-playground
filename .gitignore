@@ -1,3 +1,4 @@
 **/.DS_Store
 graphql-apollo/node_modules
 graphql-apollo/yarn.lock
+.idea/

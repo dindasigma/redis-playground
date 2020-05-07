@@ -9,9 +9,9 @@ import (
 	"bytes"
 	"encoding/gob"
 
-	"github.com/dindasigma/go-rabbitmq/dto"
-	"github.com/dindasigma/go-rabbitmq/qutils"
 	"github.com/streadway/amqp"
+	"github.com/dindasigma/go-rabbitmq/project/dto"
+	"github.com/dindasigma/go-rabbitmq/project/qutils"
 )
 
 var url = "amqp://guest:guest@localhost"
@@ -35,17 +35,19 @@ func main() {
 	defer ch.Close()
 
 	dataQueue := qutils.GetQueue(*name, ch)
-	// sensorQueue := qutils.GetQueue(qutils.SensorListQueue, ch)
 
+	// publish the sensor route name for the coordinator to pick up
 	msg := amqp.Publishing{Body: []byte(*name)}
+	// using fanout exchange, and key:"" because it will inform all the queue at the same time
 	ch.Publish("amq.fanout", "", false, false, msg)
-
 
 	dur, _ := time.ParseDuration(strconv.Itoa(1000/int(*freq)) + "ms")
 
 	signal := time.Tick(dur)
 
+	// buffer to hold the encoded data
 	buf := new(bytes.Buffer)
+
 	enc:= gob.NewEncoder(buf)
 
 	for range signal {
@@ -57,6 +59,7 @@ func main() {
 			Timestamp: time.Now(),
 		}
 
+		// reset buffer, because buffer is reusable
 		buf.Reset()
 		enc.Encode(reading)
 

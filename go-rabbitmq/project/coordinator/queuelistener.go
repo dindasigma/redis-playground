@@ -1,11 +1,16 @@
 package coordinator
 
+// coordinator responsibility:
+// 1. Interact with the sensor via message broker
+// 2.
+
 import (
 	"bytes"
 	"encoding/gob"
 	"fmt"
-	"github.com/dindasigma/go-rabbitmq/dto"
-	"github.com/dindasigma/go-rabbitmq/qutils"
+
+	"github.com/dindasigma/go-rabbitmq/project/dto"
+	"github.com/dindasigma/go-rabbitmq/project/qutils"
 	"github.com/streadway/amqp"
 )
 
@@ -28,7 +33,10 @@ func NewQueueListener() *QueueListener {
 }
 
 func (ql *QueueListener) ListenForNewSource() {
+	// create queue with no name, rabbit-mq will generate the name automatically
 	q := qutils.GetQueue("", ql.ch)
+
+	// bind the fan-out queue
 	ql.ch.QueueBind(
 		q.Name,
 		"",
