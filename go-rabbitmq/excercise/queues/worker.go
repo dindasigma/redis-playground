@@ -2,9 +2,10 @@ package main
 
 import (
 	"bytes"
-	"github.com/dindasigma/go-rabbitmq/excercise/utils"
 	"log"
 	"time"
+
+	"github.com/dindasigma/go-rabbitmq/excercise/utils"
 )
 
 func main() {
