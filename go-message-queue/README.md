@@ -27,12 +27,13 @@ NSQD daemon is the core part of NSQ. It’s a standalone binary that listens for
 
 ### Cons of RabbitMQ
 - A bit of steep learning curve
+- Not easy to implement retry with failure (using [dead letter exchange](https://www.rabbitmq.com/dlx.html))
 
 ### Pros of NSQ
 - Written in Go
 - Message model is simple and direct
 - Writing into NSQD can be as simple as performing an HTTP POST request to the endpoint
-- Supports retry with delay naturally. When message handler indicates failure, that information is sent to nsqd in the form of a REQ (re-queue) command. Also, nsqd will automatically time out (and re-queue) a message if it hasn't been responded to in a configurable time window.
+- Supports retry with delay naturally. When message handler indicates failure, that information is sent to nsqd in the form of a REQ (re-queue) command. Also, nsqd will automatically time out (and re-queue) a message if it hasn't been responded to in a configurable time window. We also can call `requeue()` with parameter of delay.
 
 ### Cons of NSQ
 - There’s no concept of routing based upon on key

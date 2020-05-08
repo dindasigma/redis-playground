@@ -14,7 +14,7 @@ func main(){
 	wg.Add(1)
 
 	config := nsq.NewConfig()
-	consumer, err := nsq.NewConsumer("test-nsq", "ch2", config)
+	consumer, err := nsq.NewConsumer("clicks", "spam_analysis", config)
 	if err != nil {
 		log.Fatal(err)
 	}

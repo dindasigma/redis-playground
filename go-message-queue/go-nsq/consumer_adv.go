@@ -52,6 +52,13 @@ func main() {
 		log.Fatal(err)
 	}
 
+	/*command := nsq.Command{
+		[]byte("test"),
+		[]byte("test"),
+		[]byte("test"),
+	}*/
+
+
 	shutdown := make(chan os.Signal, 2)
 	signal.Notify(shutdown, syscall.SIGINT)
 
