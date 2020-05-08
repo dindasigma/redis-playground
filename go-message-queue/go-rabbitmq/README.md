@@ -8,7 +8,7 @@ $ docker run -d -p 15672:15672 -p 5672:5672 --name go-rabbitmq rabbitmq:3-manage
 `15672` is the default port for RabbitMQ GUI, `5672` for RabbitMQ message broker.
 
 ```
-$ go run excercise/basic/basic.go
+$ go run exercise/basic/basic.go
 ```
 
 ```

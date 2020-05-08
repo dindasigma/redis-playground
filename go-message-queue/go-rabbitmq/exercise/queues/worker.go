@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/dindasigma/go-rabbitmq/excercise/utils"
+	"github.com/dindasigma/go-rabbitmq/exercise/utils"
 )
 
 func main() {

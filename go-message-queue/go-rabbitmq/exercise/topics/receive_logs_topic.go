@@ -4,7 +4,7 @@ package main
 // go run receive_logs_topic.go "*.critical"
 
 import (
-	"github.com/dindasigma/go-rabbitmq/excercise/utils"
+	"github.com/dindasigma/go-rabbitmq/exercise/utils"
 	"log"
 	"os"
 )

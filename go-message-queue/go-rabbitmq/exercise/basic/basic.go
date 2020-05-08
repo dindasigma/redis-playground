@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/streadway/amqp"
-	"github.com/dindasigma/go-rabbitmq/excercise/utils"
+	"github.com/dindasigma/go-rabbitmq/exercise/utils"
 )
 
 func main() {

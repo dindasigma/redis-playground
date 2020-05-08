@@ -1,18 +1,14 @@
 package main
 
-// deliver a message to multiple consumers
-// using own declared exchanges: receives messages from producers and the other side it pushes them to queues
-// exchange type: fanout (broadcasts all the messages it receives to all the queues it knows)
-// by default exchange type is direct (guarantee that only one of client get the message and only one time)
-
-// so we will publish to exchange not queue
+// topic exchange: send messages based on some criteria
+// go run receive_logs_topic.go "kern.*" "*.critical"
 
 import (
 	"log"
 	"os"
 
 	"github.com/streadway/amqp"
-	"github.com/dindasigma/go-rabbitmq/excercise/utils"
+	"github.com/dindasigma/go-rabbitmq/exercise/utils"
 )
 
 func main() {
@@ -21,8 +17,8 @@ func main() {
 	defer ch.Close()
 
 	err := ch.ExchangeDeclare(
-		"logs", // name
-		"fanout", // type
+		"logs_topic", // name
+		"topic", // type
 		true, // durable
 		false, // auto-deleted
 		false, // internal
@@ -33,10 +29,9 @@ func main() {
 
 	body := utils.BodyFrom(os.Args)
 
-	// publish with our logs exchange
 	err = ch.Publish(
-		"logs", // exchange
-		"",     // routing key
+		"logs_topic", // exchange
+		utils.SeverityFrom(os.Args), // routing key
 		false,  // mandatory
 		false,  // immediate
 		amqp.Publishing{
@@ -47,4 +42,3 @@ func main() {
 
 	log.Printf(" [x] Sent %s", body)
 }
-

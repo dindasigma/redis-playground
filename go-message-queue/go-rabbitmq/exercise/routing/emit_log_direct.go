@@ -1,15 +1,18 @@
 package main
 
-// topic exchange: send messages based on some criteria
-// go run receive_logs_topic.go "kern.*" "*.critical"
+// subscribe only to a subset of the messages
+// Bindings can take an extra routing_key parameter
+// It is perfectly legal to bind multiple queues with the same binding key
+// will be using direct exchange
 
 import (
 	"log"
 	"os"
 
+	"github.com/dindasigma/go-rabbitmq/exercise/utils"
 	"github.com/streadway/amqp"
-	"github.com/dindasigma/go-rabbitmq/excercise/utils"
 )
+
 
 func main() {
 	conn, ch := utils.GetChannel()
@@ -17,8 +20,8 @@ func main() {
 	defer ch.Close()
 
 	err := ch.ExchangeDeclare(
-		"logs_topic", // name
-		"topic", // type
+		"logs_direct", // name
+		"direct", // type
 		true, // durable
 		false, // auto-deleted
 		false, // internal
@@ -29,8 +32,9 @@ func main() {
 
 	body := utils.BodyFrom(os.Args)
 
+	// publish with our logs exchange
 	err = ch.Publish(
-		"logs_topic", // exchange
+		"logs_direct", // exchange
 		utils.SeverityFrom(os.Args), // routing key
 		false,  // mandatory
 		false,  // immediate

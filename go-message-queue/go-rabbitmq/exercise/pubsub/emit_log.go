@@ -1,18 +1,19 @@
 package main
 
-// subscribe only to a subset of the messages
-// Bindings can take an extra routing_key parameter
-// It is perfectly legal to bind multiple queues with the same binding key
-// will be using direct exchange
+// deliver a message to multiple consumers
+// using own declared exchanges: receives messages from producers and the other side it pushes them to queues
+// exchange type: fanout (broadcasts all the messages it receives to all the queues it knows)
+// by default exchange type is direct (guarantee that only one of client get the message and only one time)
+
+// so we will publish to exchange not queue
 
 import (
 	"log"
 	"os"
 
-	"github.com/dindasigma/go-rabbitmq/excercise/utils"
 	"github.com/streadway/amqp"
+	"github.com/dindasigma/go-rabbitmq/exercise/utils"
 )
-
 
 func main() {
 	conn, ch := utils.GetChannel()
@@ -20,8 +21,8 @@ func main() {
 	defer ch.Close()
 
 	err := ch.ExchangeDeclare(
-		"logs_direct", // name
-		"direct", // type
+		"logs", // name
+		"fanout", // type
 		true, // durable
 		false, // auto-deleted
 		false, // internal
@@ -34,8 +35,8 @@ func main() {
 
 	// publish with our logs exchange
 	err = ch.Publish(
-		"logs_direct", // exchange
-		utils.SeverityFrom(os.Args), // routing key
+		"logs", // exchange
+		"",     // routing key
 		false,  // mandatory
 		false,  // immediate
 		amqp.Publishing{
@@ -46,3 +47,4 @@ func main() {
 
 	log.Printf(" [x] Sent %s", body)
 }
+
