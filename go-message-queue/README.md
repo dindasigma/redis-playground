@@ -41,12 +41,12 @@ NSQD daemon is the core part of NSQ. It’s a standalone binary that listens for
 ## Implementation
 
 ### RabbitMQ
-- [Direct](https://github.com/dindasigma/my-playground/tree/master/go-message-queue/go-rabbitmq/excercise/basic)
-- [Direct with queues](https://github.com/dindasigma/my-playground/tree/master/go-message-queue/go-rabbitmq/excercise/queues)
-- [Pub-sub/Broadcast](https://github.com/dindasigma/my-playground/tree/master/go-message-queue/go-rabbitmq/excercise/pubsub)
-- [Routing based upon on key](https://github.com/dindasigma/my-playground/tree/master/go-message-queue/go-rabbitmq/excercise/routing)
-- [Routing based upon some pattern](https://github.com/dindasigma/my-playground/tree/master/go-message-queue/go-rabbitmq/excercise/topics)
-- [RPC](https://github.com/dindasigma/my-playground/tree/master/go-message-queue/go-rabbitmq/excercise/rpc)
+- [Direct](https://github.com/dindasigma/my-playground/tree/master/go-message-queue/go-rabbitmq/exercise/basic)
+- [Direct with queues](https://github.com/dindasigma/my-playground/tree/master/go-message-queue/go-rabbitmq/exercise/queues)
+- [Pub-sub/Broadcast](https://github.com/dindasigma/my-playground/tree/master/go-message-queue/go-rabbitmq/exercise/pubsub)
+- [Routing based upon on key](https://github.com/dindasigma/my-playground/tree/master/go-message-queue/go-rabbitmq/exercise/routing)
+- [Routing based upon some pattern](https://github.com/dindasigma/my-playground/tree/master/go-message-queue/go-rabbitmq/exercise/topics)
+- [RPC](https://github.com/dindasigma/my-playground/tree/master/go-message-queue/go-rabbitmq/exercise/rpc)
 
 ### NSQ
 - Direct (run [producer.go](https://github.com/dindasigma/my-playground/blob/master/go-message-queue/go-nsq/producer.go) and [consumer1.go](https://github.com/dindasigma/my-playground/blob/master/go-message-queue/go-nsq/consumer1.go))
