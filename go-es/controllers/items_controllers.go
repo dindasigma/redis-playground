@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/dindasigma/my-playground/go-es/domain/items"
+	"github.com/dindasigma/my-playground/go-es/domain/queries"
 	"github.com/dindasigma/my-playground/go-es/services"
 	"github.com/dindasigma/my-playground/go-es/utils/response"
 	"github.com/gorilla/mux"
@@ -20,6 +21,7 @@ var (
 type itemsControllerInterface interface {
 	Create(w http.ResponseWriter, r *http.Request)
 	Get(w http.ResponseWriter, r *http.Request)
+	Search(w http.ResponseWriter, r *http.Request)
 }
 
 type itemsController struct {
@@ -57,4 +59,26 @@ func (cont *itemsController) Get(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	response.RespondJson(w, http.StatusOK, item)
+}
+
+func (c *itemsController) Search(w http.ResponseWriter, r *http.Request) {
+	bytes, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		response.RespondError(w, err)
+		return
+	}
+	defer r.Body.Close()
+
+	var query queries.EsQuery
+	if err := json.Unmarshal(bytes, &query); err != nil {
+		response.RespondError(w, err)
+		return
+	}
+
+	items, searchErr := services.ItemsService.Search(query)
+	if searchErr != nil {
+		response.RespondError(w, searchErr)
+		return
+	}
+	response.RespondJson(w, http.StatusOK, items)
 }

@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/dindasigma/my-playground/go-es/client/elasticsearch"
+	"github.com/dindasigma/my-playground/go-es/domain/queries"
 )
 
 const (
@@ -41,4 +42,27 @@ func (i *Item) Get() error {
 	log.Print(string(bytes))
 	return nil
 
+}
+
+func (i *Item) Search(query queries.EsQuery) ([]Item, error) {
+	result, err := elasticsearch.Client.Search(indexItems, query.Build())
+	if err != nil {
+		return nil, err
+	}
+
+	items := make([]Item, result.TotalHits())
+	for index, hit := range result.Hits.Hits {
+		bytes, _ := hit.Source.MarshalJSON()
+		var item Item
+		if err := json.Unmarshal(bytes, &item); err != nil {
+			return nil, err
+		}
+		item.Id = hit.Id
+		items[index] = item
+	}
+
+	if len(items) == 0 {
+		return nil, err
+	}
+	return items, nil
 }
