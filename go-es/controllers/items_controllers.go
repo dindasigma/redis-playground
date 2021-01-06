@@ -5,10 +5,12 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/dindasigma/my-playground/go-es/domain/items"
 	"github.com/dindasigma/my-playground/go-es/services"
 	"github.com/dindasigma/my-playground/go-es/utils/response"
+	"github.com/gorilla/mux"
 )
 
 var (
@@ -17,6 +19,7 @@ var (
 
 type itemsControllerInterface interface {
 	Create(w http.ResponseWriter, r *http.Request)
+	Get(w http.ResponseWriter, r *http.Request)
 }
 
 type itemsController struct {
@@ -42,4 +45,16 @@ func (cont *itemsController) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	response.RespondJson(w, http.StatusCreated, result)
+}
+
+func (cont *itemsController) Get(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	itemId := strings.TrimSpace(vars["id"])
+
+	item, err := services.ItemsService.Get(itemId)
+	if err != nil {
+		response.RespondError(w, err)
+		return
+	}
+	response.RespondJson(w, http.StatusOK, item)
 }

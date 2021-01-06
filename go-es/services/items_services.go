@@ -10,6 +10,7 @@ var (
 
 type itemsServiceInterface interface {
 	Create(items.Item) (*items.Item, error)
+	Get(string) (*items.Item, error)
 }
 
 type itemsService struct{}
@@ -19,4 +20,14 @@ func (s *itemsService) Create(item items.Item) (*items.Item, error) {
 		return nil, err
 	}
 	return &item, nil
+}
+
+func (s *itemsService) Get(id string) (*items.Item, error) {
+	item := items.Item{Id: id}
+
+	if err := item.Get(); err != nil {
+		return nil, err
+	}
+	return &item, nil
+
 }
