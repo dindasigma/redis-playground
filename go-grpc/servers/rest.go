@@ -1,4 +1,4 @@
-package rest
+package servers
 
 import (
 	"net/http"
@@ -12,20 +12,20 @@ import (
 type RestServer struct {
 	server       *http.Server
 	orderService orders.OrderServiceServer // the same order service we injected into the gRPC server
+	errCh        chan error
 }
-
-var (
-	router = gin.Default()
-)
 
 // NewRestServer is a convenience func to create a RestServer
 func NewRestServer(orderService orders.OrderServiceServer, port string) RestServer {
+	router := gin.Default()
+
 	rs := RestServer{
 		server: &http.Server{
 			Addr:    ":" + port,
 			Handler: router,
 		},
 		orderService: orderService,
+		errCh:        make(chan error),
 	}
 
 	// register routes
@@ -39,8 +39,20 @@ func NewRestServer(orderService orders.OrderServiceServer, port string) RestServ
 }
 
 // Start starts the server
-func (r RestServer) Start() error {
-	return r.server.ListenAndServe()
+func (r RestServer) Start() {
+	go func() {
+		r.errCh <- r.server.ListenAndServe()
+	}()
+}
+
+// Stop stops the server
+func (r RestServer) Stop() error {
+	return r.server.Close()
+}
+
+// Error returns the server's error channel
+func (r RestServer) Error() chan error {
+	return r.errCh
 }
 
 func (r RestServer) create(c *gin.Context) {
