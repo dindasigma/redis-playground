@@ -2,11 +2,11 @@
 
 gRPC using HTTP/2.0 as the communication protocol and protobuf as the communication contract between server and client.
 
-Protocol buffers (protobuf) are a data serialization that is extensible machanism for serializing structured data. Once serialized, this protocol produces a binary payload that is smaller in size than a normal JSON payload. This serialized binary payload then travel over the binary transport protocol called HTTP/2.0. 
+Protocol buffers (protobuf) are a data serialization that is extensible machanism for serializing structured data. Once serialized, this protocol produces a binary payload that is smaller in size than a normal JSON payload. This serialized binary payload then travel over the binary transport protocol called HTTP/2.0.
+
 Generate Protobuf:
 ```
-cd proto
-sh order-gen.sh
+make compile
 ```
 
 HTTP/2.0 support multiplexing, it allows a single user to have multiple responses, and vice versa.
@@ -34,5 +34,15 @@ This repo implements 4 types communication pattern of gRPC:
   rpc process(stream google.protobuf.StringValue) returns (stream CombinedShipment);
   ```
   
+
+## Create private key and the certificate
+```
+$ openssl genrsa -out certs/server.key 2048
+ 
+$ openssl req -nodes -new -x509 -sha256 -days 1825 -config certs/cert.conf -extensions 'req_ext' -key certs/server.key -out certs/server.crt
+```
+
 ## References
 [gRPC Up & Running](https://github.com/grpc-up-and-running/samples)
+
+[Using TLS/SSL certificates for gRPC](http://www.inanzzz.com/index.php/post/jo4y/using-tls-ssl-certificates-for-grpc-client-and-server-communications-in-golang-updated)

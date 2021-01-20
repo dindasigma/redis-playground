@@ -86,8 +86,16 @@ func (s *Server) Update(stream pb.OrderManagement_UpdateServer) error {
 // Bi-directional Streaming RPC Example
 func (s *Server) Process(stream pb.OrderManagement_ProcessServer) error {
 	batchMarker := 1
+
 	var combinedShipmentMap = make(map[string]pb.CombinedShipment)
 	for {
+		// determine whether the current RPC is cancelled by the other party.
+		if stream.Context().Err() == context.Canceled {
+			log.Printf(" Context Cacelled for this stream: -> %s", stream.Context().Err())
+			log.Printf("Stopped processing any more order of this stream!")
+			return stream.Context().Err()
+		}
+
 		// read order ids from the incomming stream
 		orderId, err := stream.Recv()
 		log.Printf("Reading Proc order : %s", orderId)

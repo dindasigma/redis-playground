@@ -5,7 +5,7 @@ package ecommerce;
 import "google/protobuf/wrappers.proto";
 
 
-option go_package = "github.com/dindasigma/my-playground/go-grpc/proto/order;order";
+option go_package = "github.com/dindasigma/my-playground/go-grpc/proto/order";
 
 service OrderManagement {
     // create order (unary RPC)

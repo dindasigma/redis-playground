@@ -30,9 +30,11 @@ func GetOrder(ctx context.Context, client pb.OrderManagementClient, id string) (
 }
 
 // Search Order: Server streaming scenario
-func SearchOrders(ctx context.Context, client pb.OrderManagementClient, query string) {
+func SearchOrders(ctx context.Context, client pb.OrderManagementClient, query string) ([]*pb.Order, error) {
 	// create searchStream which has a Recv method
+	result := []*pb.Order{}
 	searchStream, _ := client.Search(ctx, &wrapper.StringValue{Value: query})
+
 	for {
 		// calling order responses one by one with the client stream's Recv()
 		searchOrder, err := searchStream.Recv()
@@ -43,14 +45,15 @@ func SearchOrders(ctx context.Context, client pb.OrderManagementClient, query st
 		}
 
 		if err == nil {
+			result = append(result, searchOrder)
 			// receiving the response
-			log.Print("Search Result : ", searchOrder)
 		}
 	}
+	return result, nil
 }
 
 // Update Orders: Client streaming scenario
-func UpdateOrders(ctx context.Context, client pb.OrderManagementClient, data map[string]pb.Order) {
+func UpdateOrders(ctx context.Context, client pb.OrderManagementClient, data map[string]pb.Order) (*wrapper.StringValue, error) {
 	updateStream, err := client.Update(ctx)
 
 	if err != nil {
@@ -62,6 +65,7 @@ func UpdateOrders(ctx context.Context, client pb.OrderManagementClient, data map
 		// Updating order
 		if err := updateStream.Send(&order); err != nil {
 			log.Fatalf("%v.Send(%v) = %v", updateStream, order, err)
+			return &wrapper.StringValue{}, err
 		}
 	}
 
@@ -69,14 +73,16 @@ func UpdateOrders(ctx context.Context, client pb.OrderManagementClient, data map
 	updateRes, err := updateStream.CloseAndRecv()
 	if err != nil {
 		log.Fatalf("%v.CloseAndRecv() got error %v, want %v", updateStream, err, nil)
+		return &wrapper.StringValue{}, err
 	}
 
 	// receiving the response
-	log.Printf("Update Orders Res : %s", updateRes)
+	return updateRes, nil
 }
 
 // Process Order: Bidirectional streaming scenario
 func ProcessOrders(ctx context.Context, client pb.OrderManagementClient, ids []string) {
+
 	streamProcOrder, err := client.Process(ctx)
 	if err != nil {
 		log.Fatalf("%v.ProcessOrders(_) = _, %v", client, err)
@@ -95,6 +101,7 @@ func ProcessOrders(ctx context.Context, client pb.OrderManagementClient, ids []s
 	go asncClientBidirectionalRPC(streamProcOrder, channel)
 	// just mimic a delay
 	//time.Sleep(time.Millisecond * 1000)
+	// canceling the rpc
 	// close in the end of the client stream
 	if err := streamProcOrder.CloseSend(); err != nil {
 		log.Fatal(err)
