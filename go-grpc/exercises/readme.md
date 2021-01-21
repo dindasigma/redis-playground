@@ -6,7 +6,7 @@ Protocol buffers (protobuf) are a data serialization that is extensible machanis
 
 Generate Protobuf:
 ```
-make compile
+make generate-proto
 ```
 
 HTTP/2.0 support multiplexing, it allows a single user to have multiple responses, and vice versa.
@@ -42,6 +42,15 @@ $ openssl genrsa -out certs/server.key 2048
 $ openssl req -nodes -new -x509 -sha256 -days 1825 -config certs/cert.conf -extensions 'req_ext' -key certs/server.key -out certs/server.crt
 ```
 
+## Run
+Server
+```
+make run-server
+```
+Client
+```
+make run-client
+```
 ## References
 [gRPC Up & Running](https://github.com/grpc-up-and-running/samples)
 

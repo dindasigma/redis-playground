@@ -1,18 +1,22 @@
 package main
 
 import (
+
 	"log"
 	"net"
 
 	"github.com/dindasigma/my-playground/go-grpc/exercises/server/controllers"
+	"github.com/dindasigma/my-playground/go-grpc/exercises/server/auth"
 	pb "github.com/dindasigma/my-playground/go-grpc/exercises/server/proto/order"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpc_auth "github.com/grpc-ecosystem/go-grpc-middleware/auth"
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
 
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+
 )
 
 var (
@@ -50,10 +54,12 @@ func main() {
 		grpc_middleware.WithUnaryServerChain(
 			grpc_ctxtags.UnaryServerInterceptor(grpc_ctxtags.WithFieldExtractor(grpc_ctxtags.CodeGenRequestFieldExtractor)),
 			grpc_zap.UnaryServerInterceptor(zapLogger),
+			grpc_auth.UnaryServerInterceptor(auth.AuthFunc),
 		),
 		grpc_middleware.WithStreamServerChain(
 			grpc_ctxtags.StreamServerInterceptor(grpc_ctxtags.WithFieldExtractor(grpc_ctxtags.CodeGenRequestFieldExtractor)),
 			grpc_zap.StreamServerInterceptor(zapLogger),
+			grpc_auth.StreamServerInterceptor(auth.AuthFunc),
 		),
 	)
 

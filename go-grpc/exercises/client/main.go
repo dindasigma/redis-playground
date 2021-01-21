@@ -8,6 +8,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/dindasigma/my-playground/go-grpc/exercises/client/auth"
 	"github.com/dindasigma/my-playground/go-grpc/exercises/client/controllers"
 	pb "github.com/dindasigma/my-playground/go-grpc/exercises/client/proto/order"
 	"google.golang.org/grpc"
@@ -37,7 +38,13 @@ func newGrpcClient() pb.OrderManagementClient {
 		ServerName:         hostname,
 	}
 
+	auth := auth.BasicAuth{
+		Username: "admin",
+		Password: "admin",
+	}
+
 	opts := []grpc.DialOption{
+		grpc.WithPerRPCCredentials(auth),
 		grpc.WithTransportCredentials(credentials.NewTLS(tlsConf)),
 	}
 
@@ -91,4 +98,5 @@ func main() {
 	// Process Orders: Bi-directional streaming
 	ids := []string{"102", "103"}
 	controllers.ProcessOrders(ctx, client, ids)
+
 }
