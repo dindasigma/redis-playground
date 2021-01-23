@@ -1,4 +1,4 @@
-package main
+package book
 
 import "fmt"
 
@@ -77,4 +77,19 @@ var books = []Book{
 		Author:        "Karen Armstrong",
 		YearPublished: 1993,
 	},
+}
+
+func queryCache(id int, cache map[int]Book) (Book, bool) {
+	b, ok := cache[id]
+	return b, ok
+}
+
+func queryDatabase(id int, cache map[int]Book) (Book, bool) {
+	for _, b := range books {
+		if b.ID == id {
+			cache[id] = b
+			return b, true
+		}
+	}
+	return Book{}, false
 }

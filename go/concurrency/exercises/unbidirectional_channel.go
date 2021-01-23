@@ -21,6 +21,8 @@ func main() {
 		// receive message
 		fmt.Println(<-ch)
 		// ch <- 42 // will error
+
+		// concurrent task has been completed
 		wg.Done()
 	}(ch, wg)
 
@@ -28,8 +30,11 @@ func main() {
 		// send message
 		ch <- 42
 		// fmt.Println(<-ch) // will error
+
+		// concurrent task has been completed
 		wg.Done()
 	}(ch, wg)
 
+	// wait until no longer any concurrent activities
 	wg.Wait()
 }

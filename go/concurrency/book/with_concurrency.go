@@ -1,16 +1,16 @@
-package main
+package book
 
 import (
 	"fmt"
 	"math/rand"
-	"time"
 	"sync"
+	"time"
 )
 
 var cache = map[int]Book{}
 var rnd = rand.New(rand.NewSource(time.Now().UnixNano()))
 
-func withConcurrency() {
+func WithConcurrency() {
 	fmt.Println("with concurrency")
 
 	wg := &sync.WaitGroup{}
@@ -23,19 +23,19 @@ func withConcurrency() {
 		wg.Add(2)
 
 		go func(id int, wg *sync.WaitGroup, m *sync.RWMutex, ch chan<- Book) {
-			if b, ok := queryCacheWithConcurrency(id); ok {
+			if b, ok := queryCache(id, cache); ok {
 				ch <- b
 			}
 			wg.Done()
 		}(id, wg, m, cacheCh)
 
 		go func(id int, wg *sync.WaitGroup, m *sync.RWMutex, ch chan<- Book) {
-			if b, ok := queryDatabaseWithConcurrency(id); ok {
+			if b, ok := queryDatabase(id, cache); ok {
 				m.Lock()
 				cache[id] = b
 				m.Unlock()
 				ch <- b
-				
+
 			}
 		}(id, wg, m, dbCh)
 
@@ -51,23 +51,10 @@ func withConcurrency() {
 				fmt.Println(b)
 			}
 		}(cacheCh, dbCh)
-		time.Sleep(150 * time.Millisecond)
+		time.Sleep(200 * time.Millisecond)
 	}
 
 	wg.Wait()
-}
-
-func queryCacheWithConcurrency(id int) (Book, bool) {
-	b, ok := cache[id]
-	return b, ok
-}
-
-func queryDatabaseWithConcurrency(id int) (Book, bool) {
-	for _, b := range books {
-		if b.ID == id {
-			cache[id] = b
-			return b, true
-		}
-	}
-	return Book{}, false
+	//time.Sleep(150 * time.Millisecond)
+	//fmt.Println()
 }

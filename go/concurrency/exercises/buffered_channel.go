@@ -19,6 +19,8 @@ func main() {
 	go func(ch chan int, wg *sync.WaitGroup) {
 		// receive message
 		fmt.Println(<-ch)
+
+		// concurrent task has been completed
 		wg.Done()
 	}(ch, wg)
 
@@ -26,6 +28,8 @@ func main() {
 		// send message
 		ch <- 42
 		ch <- 27
+
+		// concurrent task has been completed
 		wg.Done()
 	}(ch, wg)
 

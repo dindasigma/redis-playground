@@ -20,7 +20,7 @@ func main() {
 	go func(id int, wg *sync.WaitGroup, m *sync.Mutex) {
 		m.Lock() // Lock so only one goroutine at a time can access map v
 		v[id]++
-		m.Unlock()
+		m.Unlock() // unlock
 		wg.Done()
 	}(id, wg, m)
 
@@ -29,5 +29,6 @@ func main() {
 		wg.Done()
 	}(id, wg, m)
 
+	// wait until no longer any concurrent activities
 	wg.Wait()
 }

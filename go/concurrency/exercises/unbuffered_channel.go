@@ -19,14 +19,17 @@ func main() {
 	go func(ch chan int, wg *sync.WaitGroup) {
 		// receive message
 		fmt.Println(<-ch)
+		// concurrent task has been completed
 		wg.Done()
 	}(ch, wg)
 
 	go func(ch chan int, wg *sync.WaitGroup) {
 		// send message
 		ch <- 42
+		// concurrent task has been completed
 		wg.Done()
 	}(ch, wg)
 
+	// wait until no longer any concurrent activities
 	wg.Wait()
 }

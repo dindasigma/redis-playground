@@ -23,6 +23,7 @@ func main() {
 		close(ch)
 		fmt.Println(<-ch) // return 0 value but no error
 
+		// concurrent task has been completed
 		wg.Done()
 	}(ch, wg)
 
@@ -32,6 +33,7 @@ func main() {
 		// close(ch)
 		// ch <- 42 // panic: send on closed channel
 
+		// concurrent task has been completed
 		wg.Done()
 	}(ch, wg)
 

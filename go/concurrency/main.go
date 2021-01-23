@@ -1,6 +1,10 @@
 package main
 
+import (
+	"github.com/dindasigma/go-concurrency/book"
+)
+
 func main() {
-	//withoutConcurrency()
-	withConcurrency()
+	//book.WithConcurrency()
+	book.WithoutConcurrency()
 }
