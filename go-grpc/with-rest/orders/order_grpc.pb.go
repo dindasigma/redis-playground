@@ -7,6 +7,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -19,15 +20,15 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrderServiceClient interface {
 	// creates a new order
-	Create(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
+	Create(ctx context.Context, in *wrapperspb.StringValue, opts ...grpc.CallOption) (*wrapperspb.StringValue, error)
 	// retrieves an existing order
-	Retrieve(ctx context.Context, in *RetrieveOrderRequest, opts ...grpc.CallOption) (*RetrieveOrderResponse, error)
+	Retrieve(ctx context.Context, in *wrapperspb.StringValue, opts ...grpc.CallOption) (*wrapperspb.StringValue, error)
 	// modifies an existing order
-	Update(ctx context.Context, in *UpdateOrderRequest, opts ...grpc.CallOption) (*UpdateOrderResponse, error)
+	Update(ctx context.Context, in *wrapperspb.StringValue, opts ...grpc.CallOption) (*wrapperspb.StringValue, error)
 	// cancels an existing order
-	Delete(ctx context.Context, in *DeleteOrderRequest, opts ...grpc.CallOption) (*DeleteOrderResponse, error)
+	Delete(ctx context.Context, in *wrapperspb.StringValue, opts ...grpc.CallOption) (*wrapperspb.StringValue, error)
 	// lists existing orders
-	List(ctx context.Context, in *ListOrderRequest, opts ...grpc.CallOption) (*ListOrderResponse, error)
+	List(ctx context.Context, in *wrapperspb.StringValue, opts ...grpc.CallOption) (*wrapperspb.StringValue, error)
 }
 
 type orderServiceClient struct {
@@ -38,8 +39,8 @@ func NewOrderServiceClient(cc grpc.ClientConnInterface) OrderServiceClient {
 	return &orderServiceClient{cc}
 }
 
-func (c *orderServiceClient) Create(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error) {
-	out := new(CreateOrderResponse)
+func (c *orderServiceClient) Create(ctx context.Context, in *wrapperspb.StringValue, opts ...grpc.CallOption) (*wrapperspb.StringValue, error) {
+	out := new(wrapperspb.StringValue)
 	err := c.cc.Invoke(ctx, "/orders.OrderService/Create", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -47,8 +48,8 @@ func (c *orderServiceClient) Create(ctx context.Context, in *CreateOrderRequest,
 	return out, nil
 }
 
-func (c *orderServiceClient) Retrieve(ctx context.Context, in *RetrieveOrderRequest, opts ...grpc.CallOption) (*RetrieveOrderResponse, error) {
-	out := new(RetrieveOrderResponse)
+func (c *orderServiceClient) Retrieve(ctx context.Context, in *wrapperspb.StringValue, opts ...grpc.CallOption) (*wrapperspb.StringValue, error) {
+	out := new(wrapperspb.StringValue)
 	err := c.cc.Invoke(ctx, "/orders.OrderService/Retrieve", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -56,8 +57,8 @@ func (c *orderServiceClient) Retrieve(ctx context.Context, in *RetrieveOrderRequ
 	return out, nil
 }
 
-func (c *orderServiceClient) Update(ctx context.Context, in *UpdateOrderRequest, opts ...grpc.CallOption) (*UpdateOrderResponse, error) {
-	out := new(UpdateOrderResponse)
+func (c *orderServiceClient) Update(ctx context.Context, in *wrapperspb.StringValue, opts ...grpc.CallOption) (*wrapperspb.StringValue, error) {
+	out := new(wrapperspb.StringValue)
 	err := c.cc.Invoke(ctx, "/orders.OrderService/Update", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -65,8 +66,8 @@ func (c *orderServiceClient) Update(ctx context.Context, in *UpdateOrderRequest,
 	return out, nil
 }
 
-func (c *orderServiceClient) Delete(ctx context.Context, in *DeleteOrderRequest, opts ...grpc.CallOption) (*DeleteOrderResponse, error) {
-	out := new(DeleteOrderResponse)
+func (c *orderServiceClient) Delete(ctx context.Context, in *wrapperspb.StringValue, opts ...grpc.CallOption) (*wrapperspb.StringValue, error) {
+	out := new(wrapperspb.StringValue)
 	err := c.cc.Invoke(ctx, "/orders.OrderService/Delete", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -74,8 +75,8 @@ func (c *orderServiceClient) Delete(ctx context.Context, in *DeleteOrderRequest,
 	return out, nil
 }
 
-func (c *orderServiceClient) List(ctx context.Context, in *ListOrderRequest, opts ...grpc.CallOption) (*ListOrderResponse, error) {
-	out := new(ListOrderResponse)
+func (c *orderServiceClient) List(ctx context.Context, in *wrapperspb.StringValue, opts ...grpc.CallOption) (*wrapperspb.StringValue, error) {
+	out := new(wrapperspb.StringValue)
 	err := c.cc.Invoke(ctx, "/orders.OrderService/List", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -88,34 +89,34 @@ func (c *orderServiceClient) List(ctx context.Context, in *ListOrderRequest, opt
 // for forward compatibility
 type OrderServiceServer interface {
 	// creates a new order
-	Create(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error)
+	Create(context.Context, *wrapperspb.StringValue) (*wrapperspb.StringValue, error)
 	// retrieves an existing order
-	Retrieve(context.Context, *RetrieveOrderRequest) (*RetrieveOrderResponse, error)
+	Retrieve(context.Context, *wrapperspb.StringValue) (*wrapperspb.StringValue, error)
 	// modifies an existing order
-	Update(context.Context, *UpdateOrderRequest) (*UpdateOrderResponse, error)
+	Update(context.Context, *wrapperspb.StringValue) (*wrapperspb.StringValue, error)
 	// cancels an existing order
-	Delete(context.Context, *DeleteOrderRequest) (*DeleteOrderResponse, error)
+	Delete(context.Context, *wrapperspb.StringValue) (*wrapperspb.StringValue, error)
 	// lists existing orders
-	List(context.Context, *ListOrderRequest) (*ListOrderResponse, error)
+	List(context.Context, *wrapperspb.StringValue) (*wrapperspb.StringValue, error)
 }
 
 // UnimplementedOrderServiceServer should be embedded to have forward compatible implementations.
 type UnimplementedOrderServiceServer struct {
 }
 
-func (UnimplementedOrderServiceServer) Create(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error) {
+func (UnimplementedOrderServiceServer) Create(context.Context, *wrapperspb.StringValue) (*wrapperspb.StringValue, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedOrderServiceServer) Retrieve(context.Context, *RetrieveOrderRequest) (*RetrieveOrderResponse, error) {
+func (UnimplementedOrderServiceServer) Retrieve(context.Context, *wrapperspb.StringValue) (*wrapperspb.StringValue, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Retrieve not implemented")
 }
-func (UnimplementedOrderServiceServer) Update(context.Context, *UpdateOrderRequest) (*UpdateOrderResponse, error) {
+func (UnimplementedOrderServiceServer) Update(context.Context, *wrapperspb.StringValue) (*wrapperspb.StringValue, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedOrderServiceServer) Delete(context.Context, *DeleteOrderRequest) (*DeleteOrderResponse, error) {
+func (UnimplementedOrderServiceServer) Delete(context.Context, *wrapperspb.StringValue) (*wrapperspb.StringValue, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedOrderServiceServer) List(context.Context, *ListOrderRequest) (*ListOrderResponse, error) {
+func (UnimplementedOrderServiceServer) List(context.Context, *wrapperspb.StringValue) (*wrapperspb.StringValue, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
 }
 
@@ -131,7 +132,7 @@ func RegisterOrderServiceServer(s grpc.ServiceRegistrar, srv OrderServiceServer)
 }
 
 func _OrderService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateOrderRequest)
+	in := new(wrapperspb.StringValue)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -143,13 +144,13 @@ func _OrderService_Create_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: "/orders.OrderService/Create",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServiceServer).Create(ctx, req.(*CreateOrderRequest))
+		return srv.(OrderServiceServer).Create(ctx, req.(*wrapperspb.StringValue))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _OrderService_Retrieve_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RetrieveOrderRequest)
+	in := new(wrapperspb.StringValue)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -161,13 +162,13 @@ func _OrderService_Retrieve_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/orders.OrderService/Retrieve",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServiceServer).Retrieve(ctx, req.(*RetrieveOrderRequest))
+		return srv.(OrderServiceServer).Retrieve(ctx, req.(*wrapperspb.StringValue))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _OrderService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateOrderRequest)
+	in := new(wrapperspb.StringValue)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -179,13 +180,13 @@ func _OrderService_Update_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: "/orders.OrderService/Update",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServiceServer).Update(ctx, req.(*UpdateOrderRequest))
+		return srv.(OrderServiceServer).Update(ctx, req.(*wrapperspb.StringValue))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _OrderService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteOrderRequest)
+	in := new(wrapperspb.StringValue)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -197,13 +198,13 @@ func _OrderService_Delete_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: "/orders.OrderService/Delete",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServiceServer).Delete(ctx, req.(*DeleteOrderRequest))
+		return srv.(OrderServiceServer).Delete(ctx, req.(*wrapperspb.StringValue))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _OrderService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListOrderRequest)
+	in := new(wrapperspb.StringValue)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -215,7 +216,7 @@ func _OrderService_List_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: "/orders.OrderService/List",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServiceServer).List(ctx, req.(*ListOrderRequest))
+		return srv.(OrderServiceServer).List(ctx, req.(*wrapperspb.StringValue))
 	}
 	return interceptor(ctx, in, info, handler)
 }
