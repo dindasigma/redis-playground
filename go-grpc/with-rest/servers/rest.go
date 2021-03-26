@@ -1,11 +1,13 @@
 package servers
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/dindasigma/my-playground/go-grpc/orders"
 	"github.com/gin-gonic/gin"
-	"github.com/golang/protobuf/jsonpb"
+
+	wrapper "github.com/golang/protobuf/ptypes/wrappers"
 )
 
 // RestServer implements a REST server for the Order Service
@@ -56,23 +58,13 @@ func (r RestServer) Error() chan error {
 }
 
 func (r RestServer) create(c *gin.Context) {
-	var req orders.CreateOrderRequest
-
-	// unmarshal the order request
-	err := jsonpb.Unmarshal(c.Request.Body, &req)
-	if err != nil {
-		c.String(http.StatusInternalServerError, "error creating order request")
-	}
 
 	// use the order service to create the order from the req
-	resp, err := r.orderService.Create(c.Request.Context(), &req)
+	resp, err := r.orderService.Create(c.Request.Context(), &wrapper.StringValue{Value: "macbook pro"})
 	if err != nil {
 		c.String(http.StatusInternalServerError, "error creating order")
 	}
-	m := &jsonpb.Marshaler{}
-	if err := m.Marshal(c.Writer, resp); err != nil {
-		c.String(http.StatusInternalServerError, "error sending order response")
-	}
+	c.String(http.StatusOK, "ok", resp)
 }
 
 func (r RestServer) retrieve(c *gin.Context) {
@@ -88,5 +80,12 @@ func (r RestServer) delete(c *gin.Context) {
 }
 
 func (r RestServer) list(c *gin.Context) {
-	c.String(http.StatusNotImplemented, "not implemented yet")
+	// use the order service to create the order from the req
+	resp, err := r.orderService.List(c.Request.Context(), &wrapper.StringValue{Value: "macbook pro"})
+	log.Print(resp)
+	if err != nil {
+		c.String(http.StatusInternalServerError, "error creating order")
+	}
+
+	c.String(http.StatusOK, "ok", resp)
 }

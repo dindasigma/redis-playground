@@ -6,7 +6,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/dindasigma/my-playground/go-grpc/orders"
+	"github.com/dindasigma/my-playground/go-grpc/grpc"
 	"github.com/dindasigma/my-playground/go-grpc/servers"
 )
 
@@ -40,7 +40,7 @@ func (a app) shutdown() error {
 // newApp creates a new app with REST & gRPC servers
 // this func performs all app related initialization
 func newApp() (app, error) {
-	orderService := orders.UnimplementedOrderServiceServer{}
+	orderService := &grpc.Server{}
 
 	gs, err := servers.NewGrpcServer(orderService, grpcPort)
 	if err != nil {
