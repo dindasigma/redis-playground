@@ -19,6 +19,12 @@ order.proto
 - order.pb.go will contains a struct for every protobuf message type defined in order.proto.
 - order_grpc.pb.go provides client/server code for interacting with the order service.
 
+### Examples
+- `/servers/grpc.go` : create gRPC server
+- `/servers/rest.go` : create REST server and marrying with gRPC 
+- `/grpc` : RPC function implementation
+
+- `/client_grpc` : client gRPC example 
 
 ### Reference
 [The Go Microservice Toolkit
