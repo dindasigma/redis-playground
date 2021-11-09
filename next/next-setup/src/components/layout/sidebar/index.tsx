@@ -26,7 +26,7 @@ export const routes = [
 const SidebarContent = ({ onClick }: { onClick: Function }) => (
   <Stack spacing="1">
     {routes.map((props, rid) => (
-      <NavItem {...props} />
+      <NavItem {...props} key={`nav-item-${rid}`} />
     ))}
   </Stack>
 );
