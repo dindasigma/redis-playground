@@ -18,10 +18,16 @@ interface Props {
   variant: 'drawer' | 'sidebar';
 }
 
+export const routes = [
+  { label: 'Home', href: '/', icon: BiHome },
+  { label: 'User', href: '/user', icon: BiUserCircle },
+];
+
 const SidebarContent = ({ onClick }: { onClick: Function }) => (
   <Stack spacing="1">
-    <NavItem active icon={<BiHome />} label="Home" />
-    <NavItem icon={<BiUserCircle />} label="User" />
+    {routes.map((props, rid) => (
+      <NavItem {...props} />
+    ))}
   </Stack>
 );
 
