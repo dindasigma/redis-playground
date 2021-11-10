@@ -4,8 +4,10 @@ import React from 'react';
 
 const Page = (props: { children: ReactJSXElementChildrenAttribute }) => {
   return (
-    <Box w="full" px="4" py="4">
-      {props.children}
+    <Box p="8">
+      <Box maxW="7xl" mx="auto">
+        {props.children}
+      </Box>
     </Box>
   );
 };

@@ -8,7 +8,7 @@ interface Props {
   showSidebarButton?: boolean;
 }
 
-const Header = ({ showSidebarButton = true, onShowSidebar }: Props) => {
+const Navbar = ({ showSidebarButton = true, onShowSidebar }: Props) => {
   return (
     <Flex bg="gray.50" p={4} color="gray.700" borderBottomWidth="1px">
       {showSidebarButton && (
@@ -26,4 +26,4 @@ const Header = ({ showSidebarButton = true, onShowSidebar }: Props) => {
   );
 };
 
-export default Header;
+export default Navbar;

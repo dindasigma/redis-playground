@@ -31,7 +31,14 @@ export const NavItem = (props: NavItemProps) => {
         _activeLink={{ bg: 'blackAlpha.300', color: 'white' }}
       >
         <Box fontSize="lg">
-          <Icon as={icon} />
+          <Icon
+            as={icon}
+            mr="4"
+            fontSize="16"
+            _groupHover={{
+              color: 'white',
+            }}
+          />
         </Box>
         <NextLink href={href || ''} passHref>
           <LinkOverlay>

@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Box, useBreakpointValue, ChakraProviderProps } from '@chakra-ui/react';
-import Head from 'next/head';
-
-import Header from 'components/layout/header';
+import Navbar from 'components/layout/navbar';
 import Sidebar from 'components/layout/sidebar';
 import Page from 'components/layout/page';
 import { DefaultSeo } from 'next-seo';
@@ -34,7 +32,7 @@ export default function Container({ children }: ChakraProviderProps) {
         onClose={toggleSidebar}
       />
       <Box ml={!variants?.navigationButton && 200}>
-        <Header
+        <Navbar
           showSidebarButton={variants?.navigationButton}
           onShowSidebar={toggleSidebar}
         />
