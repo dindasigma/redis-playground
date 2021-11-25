@@ -42,5 +42,6 @@ Data will be fetched on the server side at runtime, on every request. Means the 
 
 ### Choosing Data Fetching Strategy
 
-![Choosing Data Fetching Strategy](http://url/to/img.png)
-Source:[https://www.udemy.com/course/nextjs-by-example/learn/lecture/27221326#overview](https://github.com/dindasigma/my-playground/blob/master/next/next-data-fetching/public/data-fetching.png)
+![Choosing Data Fetching Strategy](public/data-fetching.png)
+
+Source: [Next.js by Example](https://www.udemy.com/course/nextjs-by-example/learn/lecture/27221326#overview)
